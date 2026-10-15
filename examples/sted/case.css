@@ -1,0 +1,150 @@
+.case-main {
+  padding-top: 30px;
+}
+.case-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  padding: 10px 0 35px;
+}
+.case-intro h1 {
+  font-size: clamp(35px, 4.6vw, 62px);
+  font-weight: 550;
+  letter-spacing: -2.6px;
+  line-height: 1.08;
+  margin: 20px 0;
+}
+.case-intro h1 span {
+  color: #8b8e80;
+}
+.case-intro > div > p:last-child {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #777a71;
+}
+.case-intro > .button {
+  margin-bottom: 18px;
+  white-space: nowrap;
+  height: 46px;
+}
+.archive-frame {
+  background: white;
+  border: 1px solid #e7e6df;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.archive-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  gap: 10px;
+  background: #eeeee7;
+  border-bottom: 1px solid #e3e3d9;
+  font-size: 11px;
+}
+.archive-toolbar > div {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+.archive-toolbar strong {
+  font-weight: 550;
+}
+.archive-badge {
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  color: #727b61;
+  border: 1px solid #c9cfbc;
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+.archive-toolbar .text-button {
+  font-size: 10px;
+}
+#original-site {
+  border: 0;
+  width: 100%;
+  height: 800px;
+  display: block;
+  background: white;
+}
+.case-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 45px;
+  padding: 55px 0 35px;
+}
+.case-details h2 {
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  font-weight: 550;
+  margin: 17px 0 12px;
+}
+.case-details p:not(.eyebrow) {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #777a71;
+  max-width: 310px;
+}
+.archive-source {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 10px;
+  color: #828776;
+  padding: 20px 0 35px;
+  border-top: 1px solid #e7e6df;
+}
+.archive-source a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .case-main {
+    padding-top: 10px;
+  }
+  .case-intro {
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .case-intro h1 {
+    font-size: 34px;
+    letter-spacing: -1.5px;
+  }
+  .case-intro p br {
+    display: none;
+  }
+  .case-intro > .button {
+    margin: 0;
+  }
+  .archive-toolbar {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+  }
+  .archive-toolbar > div {
+    gap: 10px;
+  }
+  .archive-badge {
+    font-size: 7px;
+  }
+  #original-site {
+    height: 890px;
+  }
+  .case-details {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 35px 5px;
+  }
+  .case-details p:not(.eyebrow) {
+    max-width: none;
+  }
+  .archive-source {
+    flex-direction: column;
+    gap: 10px;
+    line-height: 1.7;
+  }
+}

@@ -68,7 +68,7 @@ button {
 }
 .site-header,
 main,
-footer {
+body > footer {
   max-width: 1440px;
   margin: auto;
 }
@@ -568,7 +568,7 @@ input[type="checkbox"] {
   color: #7e8376;
   margin: 0;
 }
-footer {
+body > footer {
   padding: 25px 48px;
   border-top: 1px solid var(--line);
   display: flex;
@@ -577,12 +577,12 @@ footer {
   color: #818777;
   align-items: center;
 }
-footer > div {
+body > footer > div {
   display: flex;
   gap: 22px;
   align-items: center;
 }
-footer .text-button {
+body > footer .text-button {
   font-size: 10px;
 }
 #toast {
@@ -828,12 +828,12 @@ dialog::backdrop {
   .how-to p br {
     display: none;
   }
-  footer {
+  body > footer {
     padding: 24px 21px;
     gap: 17px;
     flex-wrap: wrap;
   }
-  footer > div {
+  body > footer > div {
     gap: 20px;
   }
   .text-button {
@@ -867,5 +867,123 @@ dialog::backdrop {
   .speed-presets button,
   .segmented button {
     min-height: 38px;
+  }
+}
+.brand {
+  font-size: 21px;
+  letter-spacing: -0.8px;
+}
+.brand-suffix {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.origin-nav {
+  margin-left: auto;
+  margin-right: 24px;
+  font-size: 12px;
+  color: #707864;
+}
+.origin-nav:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.origin-story {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 45px 0 0;
+}
+.origin-image {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+.origin-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  object-position: top;
+}
+.origin-story h2 {
+  font-weight: 550;
+  font-size: 34px;
+  letter-spacing: -1px;
+  margin: 17px 0 14px;
+}
+.origin-story > div > p:not(.eyebrow) {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 340px;
+}
+.origin-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 22px;
+}
+.preset-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 20px;
+  margin-bottom: 16px;
+  border: 1px solid #dce1cc;
+  border-radius: 12px;
+  background: #f0f3e7;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.preset-note a {
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 720px) {
+  .site-header {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 90px;
+    gap: 10px;
+    padding: 18px 20px;
+  }
+  .brand {
+    font-size: 19px;
+  }
+  .brand-suffix {
+    font-size: 10px;
+    padding-left: 8px;
+    margin-left: 0;
+  }
+  .origin-nav {
+    order: 3;
+    margin: 0;
+    font-size: 11px;
+  }
+  .github {
+    margin-left: auto;
+  }
+  .origin-story {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-top: 35px;
+  }
+  .origin-story h2 {
+    font-size: 30px;
+  }
+  .origin-story > div > p:not(.eyebrow) {
+    max-width: none;
+  }
+  .preset-note {
+    flex-direction: column;
+    gap: 7px;
+  }
+  .origin-actions {
+    gap: 20px;
   }
 }

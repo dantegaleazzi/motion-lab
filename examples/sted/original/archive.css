@@ -1,0 +1,41 @@
+/* Archive-only adaptations. Original layout and motion remain in styles.css. */
+.waitlist-form input:disabled {
+  opacity: 1;
+  color: #69615b;
+  cursor: default;
+}
+.form-status {
+  font-size: 11px;
+  line-height: 1.6;
+}
+.archive-notice {
+  color: #69615b;
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: center;
+  margin: 4px 16px 18px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #a38a00;
+  outline-offset: 4px;
+}
+html[data-user-paused="true"] .sct-position,
+html[data-document-hidden="true"] .sct-position {
+  animation-play-state: paused !important;
+}
+html[data-user-paused="false"] .sct-position {
+  animation-play-state: running;
+}
+html[data-document-hidden="true"] .sct-position {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-user-paused="false"] .sct-position {
+    animation: sct-portal-travel var(--portal-duration) linear infinite !important;
+    animation-delay: calc(
+      -1 * var(--portal-duration) / 16 - (var(--depth) + var(--side-phase)) *
+        var(--portal-duration) / var(--side-slots)
+    ) !important;
+  }
+}

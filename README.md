@@ -1,4 +1,4 @@
-# Sted Motion Lab
+# Motion Lab by Dante Galeazzi
 
 **A little movement. A lot of possibility.**
 
@@ -77,6 +77,12 @@ Run `npm test` with Node.js 20+; no install is needed. Browser QA covers the int
 
 ## License & credits
 
-Code is [MIT licensed](LICENSE). Sample photographs are **not covered by MIT**: they are distributed under the [Unsplash License](https://unsplash.com/license), with source links in [assets/credits.json](assets/credits.json). The interface includes Photo credits. The DM Sans interface font is provided by Google Fonts. Use images you have the right to distribute when sharing exported examples.
+Playground code is [MIT licensed](LICENSE). Sted archive assets, brand artwork and third-party saved-content previews are separately credited in [the archive notes](examples/sted/README.md). Sample photographs are **not covered by MIT**: they are distributed under the [Unsplash License](https://unsplash.com/license), with source links in [assets/credits.json](assets/credits.json). The interface includes Photo credits. The DM Sans interface font is provided by Google Fonts. Use images you have the right to distribute when sharing exported examples.
 
-Made as an independent experiment by [Sted](https://www.sted.ai/).
+Built by [Dante Galeazzi](https://github.com/dantegaleazzi). Originally created for [Sted](https://www.sted.ai/).
+
+## The Sted original
+
+[Explore the historical landing](https://dantegaleazzi.github.io/sted-motion-lab/examples/sted/). The case recovers the original landing at commit `be5f8de` as a static snapshot with its original CSS animation. Its waitlist is demonstrative. “Try this animation” loads the Sted cards, mascot, 16-card layout and 6.321752-second portal preset into the editable playground. [Archive notes and asset licensing](examples/sted/README.md).
+
+The repository URL stays stable; the product name and creator attribution are Motion Lab by Dante Galeazzi.

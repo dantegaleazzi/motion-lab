@@ -6,19 +6,24 @@
     <meta name="theme-color" content="#f8f7f3" />
     <meta
       name="description"
-      content="A small, open-source playground for beautiful image motion. Make it yours. Take the code."
+      content="Open-source image animations by Dante Galeazzi. Customize the motion, bring your images, and take the code."
     />
-    <title>Sted Motion Lab — A little movement. A lot of possibility.</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f5e95f'/%3E%3Ctext x='20' y='30' text-anchor='middle' font-size='32'%3E✳%3C/text%3E%3C/svg%3E" />
+    <title>Motion Lab by Dante Galeazzi — Open-source image animations</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f5e95f'/%3E%3Ctext x='20' y='30' text-anchor='middle' font-size='32'%3E✳%3C/text%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="./scene.css" />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./assets/sted/cards.css" />
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="./"
-        ><span class="brand-mark">✳</span>sted<span class="brand-suffix"
-          >motion lab</span
+        ><span class="brand-mark">✳</span>Motion Lab<span class="brand-suffix"
+          >by Dante Galeazzi</span
         ></a
+      ><a class="origin-nav" href="./examples/sted/">The original ↗</a
       ><a
         class="github"
         href="https://github.com/dantegaleazzi/sted-motion-lab"
@@ -43,7 +48,13 @@
           >
         </div>
       </section>
-      <div class="workbench">
+      <div id="sted-preset-note" class="preset-note" hidden>
+        <span
+          ><strong>The Sted original.</strong> Original cards, mascot, and
+          portal rhythm. Make it yours.</span
+        ><a href="./examples/sted/">View the case ↗</a>
+      </div>
+      <div class="workbench" id="playground">
         <section class="preview-panel" aria-label="Animation preview">
           <div class="preview-heading">
             <span><i class="status-dot"></i> Live canvas</span
@@ -242,6 +253,36 @@
           </div>
         </aside>
       </div>
+      <section class="origin-story" aria-labelledby="origin-title">
+        <a
+          class="origin-image"
+          href="./examples/sted/"
+          aria-label="Explore the original Sted landing"
+          ><img
+            src="./examples/sted/preview.jpg"
+            alt="Sted’s original landing with saved-content cards flowing toward its yellow mascot"
+            loading="lazy"
+            width="1280"
+            height="860"
+        /></a>
+        <div>
+          <p class="eyebrow">FROM A REAL PROJECT</p>
+          <h2 id="origin-title">It started with Sted.</h2>
+          <p>
+            I built this animation for Sted. Then I turned it into a playground
+            anyone can use.
+          </p>
+          <div class="origin-actions">
+            <a class="button button-ink" href="./examples/sted/"
+              >View the original ↗</a
+            ><a
+              class="text-button"
+              href="#mode=portal&amp;collection=sted&amp;format=mixed&amp;speed=1&amp;count=16&amp;size=180&amp;depth=1&amp;tilt=28&amp;direction=1&amp;center=true"
+              >Try this motion ↗</a
+            >
+          </div>
+        </div>
+      </section>
       <section class="how-to">
         <div>
           <span class="step-number">01</span>
@@ -271,9 +312,12 @@
     </main>
     <footer>
       <span
-        >A small experiment by
-        <a href="https://www.sted.ai/" target="_blank" rel="noreferrer"
-          >Sted ↗</a
+        >Built by
+        <a
+          href="https://github.com/dantegaleazzi"
+          target="_blank"
+          rel="noreferrer"
+          >Dante Galeazzi ↗</a
         ></span
       >
       <div>

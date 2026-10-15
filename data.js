@@ -1,9 +1,11 @@
+import { stedCards } from "./sted-data.js";
 const entry = (id, title, category) => ({
   src: `./assets/${id}.jpg`,
   title,
   category,
 });
 export const collections = {
+  sted: stedCards.map((item) => ({ ...item, hub: "./assets/sted/mascot.svg" })),
   travel: [
     entry("alpine", "A little further away", "Alpine"),
     entry("lake", "Take the slow way", "Lakeside"),

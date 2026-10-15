@@ -93,13 +93,16 @@ function sync() {
     orbit: "02 / Orbit",
     cascade: "03 / Cascade",
   }[config.mode];
+  $("#sted-preset-note").hidden = config.collection !== "sted" || !!custom;
   $("#clear-images").hidden = !custom;
   $("#upload-label").textContent = custom
     ? `${custom.length} of your images · choose to replace`
     : "Or drop your own images";
   $("#export-note").textContent = custom
     ? "Exports include your images. Shared links use the sample collection."
-    : "One HTML file. No dependencies. All yours.";
+    : config.collection === "sted"
+      ? "Sted case assets included. Use your own images and branding for your project."
+      : "One HTML file. No dependencies. All yours.";
 }
 function set(patch) {
   config = normalize({ ...config, ...patch });
@@ -191,6 +194,8 @@ async function upload(files) {
     for (const file of selected) images.push(await readImage(file));
     if (generation !== uploadGeneration) return;
     custom = images;
+    if (config.collection === "sted")
+      config = normalize({ ...config, collection: "travel" });
     sync();
     toast(
       `${images.length} images ready. ${files.length > 12 ? "Only the first 12 were used." : "Nothing was uploaded."}`,
@@ -289,7 +294,7 @@ function save(text, mode) {
   const url = URL.createObjectURL(new Blob([text], { type: "text/html" }));
   const a = document.createElement("a");
   a.href = url;
-  a.download = `sted-motion-${mode}.html`;
+  a.download = `motion-lab-${mode}.html`;
   document.body.append(a);
   a.click();
   a.remove();
@@ -375,6 +380,8 @@ window.addEventListener("hashchange", () => {
     Object.fromEntries(new URLSearchParams(location.hash.slice(1))),
   );
   sync();
+  if (config.collection === "sted")
+    $("#sted-preset-note").scrollIntoView({ block: "start" });
 });
 $("#credits").addEventListener("click", async () => {
   try {
@@ -413,3 +420,8 @@ $("#credits").addEventListener("click", async () => {
 });
 sync();
 updatePlayback(scene.playing);
+
+if (config.collection === "sted")
+  requestAnimationFrame(() =>
+    $("#sted-preset-note").scrollIntoView({ block: "start" }),
+  );

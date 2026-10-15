@@ -19,7 +19,9 @@ export function normalize(input = {}) {
     mode: ["portal", "orbit", "cascade"].includes(input.mode)
       ? input.mode
       : defaults.mode,
-    collection: ["travel", "objects", "editorial"].includes(input.collection)
+    collection: ["travel", "objects", "editorial", "sted"].includes(
+      input.collection,
+    )
       ? input.collection
       : defaults.collection,
     format: ["mixed", "photos", "cards"].includes(input.format)
@@ -35,7 +37,16 @@ export function normalize(input = {}) {
   };
 }
 export function frameAt(p, index, config, width, height) {
-  const cardWidth = Math.min(config.size, width * 0.35);
+  const original = config.collection === "sted";
+  const cardWidth = original
+    ? Math.min(
+        ((((((width / 2 + 190) / 2.095238095) * 0.92 + 12) * 16) /
+          config.count) *
+          config.size) /
+          180,
+        width * 0.72,
+      )
+    : Math.min(config.size, width * 0.35);
   let x = 0,
     y = 0,
     z = 0,
@@ -44,12 +55,22 @@ export function frameAt(p, index, config, width, height) {
     opacity = 1;
   if (config.mode === "portal") {
     const side = index % 2 === 0 ? -1 : 1;
-    const scale = 1 - 0.72 * config.depth * Math.min(p / 0.84, 1);
-    x = (side * (width / 2 + cardWidth) * Math.pow(1 - p, 1.4)) / scale;
+    const scale =
+      1 -
+      (original ? 1 - 110 / 420 : 0.72) *
+        config.depth *
+        Math.min(p / (original ? 0.8 : 0.84), 1);
+    x =
+      (side *
+        (width / 2 + (original ? 420 : cardWidth)) *
+        Math.pow(1 - p, 1.4)) /
+      scale;
     z = 1200 * (1 - 1 / scale);
     rotateY =
       side * config.tilt * (1 - Math.min(Math.max((p - 0.4) / 0.4, 0), 1));
-    opacity = Math.min(p / 0.035, (1 - p) / 0.07, 1);
+    opacity = original
+      ? Math.min(p / 0.01, (1 - p) / 0.01, 1)
+      : Math.min(p / 0.035, (1 - p) / 0.07, 1);
   } else if (config.mode === "orbit") {
     const theta = p * Math.PI * 2;
     const scale = 1 - (config.depth * 0.38 * (1 - Math.sin(theta))) / 2;
@@ -128,10 +149,40 @@ export class MotionScene {
   build() {
     this.layer.replaceChildren();
     this.root.dataset.mode = this.config.mode;
+    this.root.dataset.collection = this.config.collection;
+    if (this.config.collection === "sted") {
+      const img = document.createElement("img");
+      img.src = this.items[0].hub || "./assets/sted/mascot.svg";
+      img.alt = "";
+      this.hub.replaceChildren(img);
+    } else {
+      this.hub.innerHTML = "<span>✳</span>";
+    }
     this.hub.hidden = !this.config.center;
     this.cards = Array.from({ length: this.config.count }, (_, index) => {
       const item = this.items[index % this.items.length];
       const card = document.createElement("article");
+      // markup is frozen local Sted source, never accepted from a URL or uploaded file.
+      if (item.markup) {
+        card.className = "scene-card scene-card--sted";
+        const template = document.createElement("template");
+        template.innerHTML = item.markup;
+        card.append(template.content.cloneNode(true));
+        if (
+          this.config.format === "photos" &&
+          card.querySelector(".visual-card__image")
+        )
+          card.classList.add("scene-card--sted-photo");
+        if (this.config.format === "cards") {
+          card.querySelector(".visual-card__image")?.remove();
+          card.querySelector(".visual-card__play")?.remove();
+          card
+            .querySelector(".visual-card")
+            ?.classList.add("visual-card--text");
+        }
+        this.layer.append(card);
+        return card;
+      }
       const photo =
         this.config.format === "photos" ||
         (this.config.format === "mixed" && index % 3 !== 2);
@@ -206,7 +257,8 @@ export class MotionScene {
     this.cards?.forEach((card, index) => {
       const offset =
         this.config.mode === "portal"
-          ? (Math.floor(index / 2) + (index % 2) * 0.5) /
+          ? (Math.floor(index / 2) +
+              (this.config.collection === "sted" ? 0 : (index % 2) * 0.5)) /
             (this.cards.length / 2)
           : index / this.cards.length;
       const f = frameAt(
