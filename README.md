@@ -4,11 +4,11 @@
 
 A small, open-source playground for image and card animations. Pick a motion, bring your images, adjust the rhythm, and take a standalone example with you. Vanilla JavaScript, CSS transforms, no runtime packages or build step.
 
-[Try the playground](https://dantegaleazzi.github.io/sted-motion-lab/) · [Contribute](CONTRIBUTING.md) · [MIT code license](LICENSE)
+[Try the playground](https://dantegaleazzi.github.io/motion-lab/) · [Contribute](CONTRIBUTING.md) · [MIT code license](LICENSE)
 
 ## What you can make
 
-- **Portal** — two streams of cards converge toward a central mark. Based on an early Sted landing-page exploration, retaining its original 6.321752-second rhythm at 1×.
+- **Portal** — two streams of cards converge toward a central mark.
 - **Orbit** — images move around an elliptical path, with adjustable depth.
 - **Cascade** — a flowing diagonal stream of cards.
 - Three photo collections: **Travel, Objects, Editorial**. Display photos, text cards, or a mix.
@@ -18,8 +18,8 @@ A small, open-source playground for image and card animations. Pick a motion, br
 ## Run locally
 
 ```sh
-git clone https://github.com/dantegaleazzi/sted-motion-lab.git
-cd sted-motion-lab
+git clone https://github.com/dantegaleazzi/motion-lab.git
+cd motion-lab
 python3 -m http.server 5186 --bind 127.0.0.1
 ```
 
@@ -79,10 +79,10 @@ Run `npm test` with Node.js 20+; no install is needed. Browser QA covers the int
 
 Playground code is [MIT licensed](LICENSE). Sted archive assets, brand artwork and third-party saved-content previews are separately credited in [the archive notes](examples/sted/README.md). Sample photographs are **not covered by MIT**: they are distributed under the [Unsplash License](https://unsplash.com/license), with source links in [assets/credits.json](assets/credits.json). The interface includes Photo credits. The DM Sans interface font is provided by Google Fonts. Use images you have the right to distribute when sharing exported examples.
 
-Built by [Dante Galeazzi](https://github.com/dantegaleazzi). Originally created for [Sted](https://www.sted.ai/).
+Built by [Dante Galeazzi](https://github.com/dantegaleazzi).
 
 ## The Sted original
 
-[Explore the historical landing](https://dantegaleazzi.github.io/sted-motion-lab/examples/sted/). The case recovers the original landing at commit `be5f8de` as a static snapshot with its original CSS animation. Its waitlist is demonstrative. “Try this animation” loads the Sted cards, mascot, 16-card layout and 6.321752-second portal preset into the editable playground. [Archive notes and asset licensing](examples/sted/README.md).
+[Explore the historical landing](https://dantegaleazzi.github.io/motion-lab/examples/sted/). The case recovers the original landing at commit `be5f8de` as a static snapshot with its original CSS animation. Its waitlist is demonstrative. “Try this animation” loads the Sted cards, mascot, 16-card layout and 6.321752-second portal preset into the editable playground. [Archive notes and asset licensing](examples/sted/README.md).
 
-The repository URL stays stable; the product name and creator attribution are Motion Lab by Dante Galeazzi.
+Motion Lab is an independent project by Dante Galeazzi. Sted is included as its original example case.
