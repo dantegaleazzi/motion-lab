@@ -1,0 +1,119 @@
+.motion-scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #f5f3ee;
+  min-height: 300px;
+}
+.motion-layer {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+  z-index: 1;
+}
+.scene-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 5px solid #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 7px 24px #30271619;
+  will-change: transform, opacity;
+  aspect-ratio: 3/4;
+  color: #262721;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.scene-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.scene-card-copy {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 42px 11px 12px;
+  background: linear-gradient(transparent, #000a);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.scene-card-copy small {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-weight: 600;
+}
+.scene-card-copy strong {
+  font-size: 17px;
+  line-height: 1.13;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+.scene-card-copy span {
+  font-size: 9px;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+.scene-card--text {
+  background: var(--tone);
+  border-color: #fff;
+}
+.scene-card--text .scene-card-copy {
+  inset: 0;
+  background: none;
+  color: #373d32;
+  padding: 22px 16px;
+  justify-content: center;
+  gap: 15px;
+}
+.scene-card--text strong {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.motion-hub {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  width: 84px;
+  height: 84px;
+  background: #fff;
+  border: 1px solid #e8e5dc;
+  box-shadow: 0 8px 24px #29261b12;
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+}
+.motion-hub[hidden] {
+  display: none;
+}
+.motion-hub span {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: #edee8b;
+  color: #313527;
+  font-size: 38px;
+}
+.motion-scene[data-mode="orbit"] .motion-hub {
+  width: 66px;
+  height: 66px;
+  border-radius: 20px;
+}
+.motion-scene[data-mode="orbit"] .motion-hub span {
+  width: 42px;
+  height: 42px;
+  font-size: 28px;
+}
+.motion-scene[data-mode="cascade"] .motion-hub {
+  display: none;
+}
