@@ -47,7 +47,7 @@
       .card-icon { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 7px; background: var(--yellow); color: var(--ink); font-size: 10px; font-weight: 800; }
       .card-title { margin: 13px 0 0; font-size: clamp(13px, 1.25vw, 16px); line-height: 1.14; letter-spacing: -.035em; font-weight: 670; }
       .card-foot { color: #8b877f; font-size: 9px; }
-      .portal { position: absolute; top: 50%; left: 50%; display: grid; width: 110px; height: 92px; place-items: center; border: 1px solid #eee7dc; border-radius: 28px; background: #fffefa; box-shadow: 0 12px 40px -24px #54422845; transform: translate(-50%, -50%); }
+      .portal { position: absolute; z-index: 2; top: 50%; left: 50%; display: grid; width: 110px; height: 92px; place-items: center; border: 1px solid #eee7dc; border-radius: 28px; background: #fffefa; box-shadow: 0 12px 40px -24px #54422845; transform: translate(-50%, -50%); }
       .portal-core { display: grid; width: 55px; height: 55px; place-items: center; border-radius: 18px 18px 18px 5px; background: var(--yellow); font-size: 26px; }
       .portal-label { position: absolute; top: calc(100% + 12px); color: #77746d; font-size: 10px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
       .stage-caption { position: absolute; right: 20px; bottom: 18px; color: #9b968d; font-size: 10px; }
@@ -135,7 +135,7 @@
         <article class="info-card"><h2>One small control, a different feeling.</h2><p>The speed slider scales the full loop, so the cards keep their spacing and stay in sync as you tune the pace.</p></article>
         <article class="info-card"><h2>Built for remixing.</h2><p>Pure HTML, CSS, and JavaScript. Fork it, swap in your own cards, or adapt the motion. <code>prefers-reduced-motion</code> is respected.</p></article>
       </section>
-      <footer class="footer"><span>Inspired by an experimental content tunnel. Demo copy and cards are fictional.</span><a href="https://github.com/" id="repo-link" aria-label="Open the source repository">View source ↗</a></footer>
+      <footer class="footer"><span>Inspired by an experimental content tunnel. Demo copy and cards are fictional.</span><a href="https://github.com/dantegaleazzi/sted-motion-lab" id="repo-link" aria-label="Open the source repository">View source ↗</a></footer>
     </main>
 
     <script>
@@ -183,7 +183,7 @@
         if (playing) elapsed += delta * speed;
         const bounds = stage.getBoundingClientRect();
         const reach = bounds.width / 2 + 200;
-        const loop = 12;
+        const loop = 6.321752;
         cards.forEach((card, index) => {
           const phase = (elapsed / loop + index / cards.length) % 1;
           let x = 0, y = 0, z = 0, angle = 0, opacity = 1;
