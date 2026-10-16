@@ -185,3 +185,45 @@
 .scene-card--full.scene-card--framed {
   border: 5px solid #fff;
 }
+
+/* Optional React wrapper controls, scoped away from the host website. */
+.motion-react {
+  width: 100%;
+}
+.motion-react-scene {
+  min-height: 0;
+}
+.motion-react-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+.motion-react-controls button {
+  font: inherit;
+  font-size: 13px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 16px;
+  border: 1px solid #dfe2d7;
+  border-radius: 10px;
+  background: #f8f7f3;
+  color: #252722;
+  cursor: pointer;
+}
+.motion-react-controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.motion-react-controls button:focus-visible {
+  outline: 3px solid #82915b;
+  outline-offset: 3px;
+}
+.motion-react-empty {
+  padding: 12px;
+  text-align: center;
+  font:
+    14px system-ui,
+    sans-serif;
+}

@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  background: #f8f7f3;
+  color: #252722;
+  font-family: system-ui, sans-serif;
+}
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 32px 20px;
+}
+a {
+  color: inherit;
+}
+h1 {
+  font-size: clamp(40px, 6vw, 70px);
+  line-height: 1.05;
+  letter-spacing: -3px;
+  margin: 25px 0;
+}
+h1 span {
+  color: #71804f;
+}
+p {
+  color: #62685a;
+  line-height: 1.6;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-top: 40px;
+}
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+button {
+  border: 1px solid #dfe2d7;
+  border-radius: 12px;
+  background: white;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #252722;
+  font: inherit;
+  text-transform: capitalize;
+}
+button[aria-pressed="true"] {
+  background: #e9ecdf;
+  border-color: #9ba56a;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #82915b;
+  outline-offset: 3px;
+}
+.example-canvas {
+  border: 1px solid #dfe2d7;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.unmounted {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 20px;
+}
+.note {
+  font-size: 12px;
+}

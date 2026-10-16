@@ -4,6 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "dev:react": "vite examples/react --host 127.0.0.1 --port 5188"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "jsdom": "26.1.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vite": "8.3.4"
   }
 }

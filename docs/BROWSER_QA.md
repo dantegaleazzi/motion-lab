@@ -19,7 +19,6 @@ This records what was actually verified for the first release, rather than claim
 
 Reduced-motion pause and visibility handling are implemented in the shared engine. A physical-device review remains useful before promising a supported mobile-browser matrix.
 
-
 ## Navigation and visual options follow-up — 2026-10-16
 
 - Ten Node tests pass, including all six motions, navigation wrap/reverse, paused easing and the full-image frame default.
@@ -29,3 +28,13 @@ Reduced-motion pause and visibility handling are implemented in the shared engin
 - Desktop and narrow layouts checked. The narrow browser reported an actual CSS viewport of 354px (390px override with existing browser zoom): no horizontal overflow; step controls are approximately 44px square. Template also has no horizontal overflow at the narrow viewport.
 - All six full-image standalone HTML exports parse and include navigation plus frame configuration; a standalone carousel export was opened through a separate local HTTP server and checked for borderless images and a working forward step. Direct file: opening and physical-device checks were not repeated.
 - Entry modules and changed styles use a cache version so existing preview sessions receive the new controls.
+
+## Website embed and React follow-up — 2026-10-16
+
+- Thirteen Node tests pass: iframe escaping and isolation, embedded image/config/license preservation, server rendering without browser globals, and real React Strict Mode mounting/updating/unmounting. Tests check independent instances, preserved pause, reduced motion, empty inputs and cleanup of frames, observers and listeners.
+- The optional React/Vite example builds successfully for production. Vite notes that the `use client` directive is not retained in its client-only bundle; the copied JSX source retains it. A full Next.js app build was not run.
+- In-app browser: generated the full-image website embed, rendered its sandboxed live preview and clicked Copy embed (reported “Copied!”).
+- Pasted the complete generated snippet twice into an independent HTTP-served page with deliberately conflicting button/article styles. Both frames render 16 cards and independent play/pause controls; manual forward navigation moves the first frame while paused. The host heading and frame styles remain separate. No browser console errors were recorded.
+- React example: all six mode buttons update the scene, all selected sample photos load, changing mode preserves pause, and unmount/remount removes/recreates exactly one scene layer. No browser console errors were recorded.
+- The independent embed page and React example have no horizontal overflow at an actual CSS viewport of 354px (390px override with the existing browser zoom). This is desktop responsive simulation, not physical iPhone/Safari testing.
+- Compatibility limits: builders may strip srcdoc/scripts or limit snippet size; site CSP may block inline code/styles/data images. The README includes a hosted-HTML iframe fallback. No claim of testing every website builder or framework is made.

@@ -1,6 +1,6 @@
-import { defaults, normalize, MotionScene } from "./motion.js?v=controls-2";
+import { defaults, normalize, MotionScene } from "./motion.js?v=integrations-1";
 import { collections } from "./data.js";
-import { makeExample } from "./export.js?v=controls-2";
+import { makeExample, makeEmbed } from "./export.js?v=integrations-1";
 const $ = (selector) => document.querySelector(selector);
 const icons = {
   pause: '<path d="M8 5v14M16 5v14"/>',
@@ -414,10 +414,64 @@ function showExport(html, mode, action) {
   openDialog("Take a little motion with you.", content);
   (action === "copy" ? copy : download).focus();
 }
+function setExportBusy(value) {
+  exportBusy = value;
+  for (const id of ["copy", "download", "embed"]) $("#" + id).disabled = value;
+}
+async function exportEmbed() {
+  if (exportBusy) return;
+  setExportBusy(true);
+  toast("Preparing your website embed…");
+  try {
+    const code = await makeEmbed(
+      { ...config },
+      custom || collections[config.collection],
+    );
+    const content = document.createElement("div");
+    content.className = "embed-dialog";
+    const description = document.createElement("p");
+    description.textContent =
+      "Paste this into your website’s custom HTML block. Your images and animation are included; no hosting or extra files needed.";
+    const template = document.createElement("template");
+    template.innerHTML = code;
+    const preview = template.content.firstElementChild;
+    preview.title = "Live embed preview";
+    preview.style.height = "260px";
+    const area = document.createElement("textarea");
+    area.readOnly = true;
+    area.value = code;
+    area.setAttribute("aria-label", "Website embed code");
+    const copy = document.createElement("button");
+    copy.className = "button button-ink";
+    copy.textContent = "Copy embed";
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+        copy.textContent = "Copied!";
+      } catch {
+        area.focus();
+        area.select();
+        toast("Select and copy the embed code below.");
+      }
+    });
+    const note = document.createElement("p");
+    note.className = "embed-note";
+    note.textContent =
+      "Adjust height:520px in the snippet to fit your page. Your editor must allow iframes and scripts inside srcdoc. If it filters them, use the React component or self-host the downloaded HTML.";
+    content.append(description, preview, copy, area, note);
+    openDialog("Embed in your website", content);
+    $("#toast").classList.remove("visible");
+    copy.focus();
+  } catch (error) {
+    toast(error.message || "Could not prepare the embed. Please try again.");
+  } finally {
+    setExportBusy(false);
+  }
+}
+$("#embed").addEventListener("click", exportEmbed);
 async function exportExample(action) {
   if (exportBusy) return;
-  exportBusy = true;
-  $("#copy").disabled = $("#download").disabled = true;
+  setExportBusy(true);
   toast("Preparing your self-contained example…");
   try {
     const snapshot = { ...config };
@@ -434,8 +488,7 @@ async function exportExample(action) {
         : error.message || "Export failed. Please try again.",
     );
   } finally {
-    exportBusy = false;
-    $("#copy").disabled = $("#download").disabled = false;
+    setExportBusy(false);
   }
 }
 $("#copy").addEventListener("click", () => exportExample("copy"));

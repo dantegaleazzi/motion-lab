@@ -1194,3 +1194,32 @@ dialog::backdrop {
     font-size: 12px;
   }
 }
+
+.embed-button {
+  width: 100%;
+  margin-top: 10px;
+}
+.embed-button > span:last-child {
+  margin-left: auto;
+}
+.react-integration-link {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 11px;
+  color: #586547;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#dialog-content .embed-dialog textarea {
+  height: 145px;
+  margin-top: 12px;
+}
+.embed-dialog > .button {
+  width: 100%;
+  margin-top: 14px;
+}
+.embed-note {
+  font-size: 11px;
+  color: var(--muted);
+}

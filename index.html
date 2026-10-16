@@ -13,8 +13,8 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f5e95f'/%3E%3Ctext x='20' y='30' text-anchor='middle' font-size='32'%3E✳%3C/text%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="./scene.css?v=controls-2" />
-    <link rel="stylesheet" href="./styles.css?v=controls-2" />
+    <link rel="stylesheet" href="./scene.css?v=integrations-1" />
+    <link rel="stylesheet" href="./styles.css?v=integrations-1" />
     <link rel="stylesheet" href="./assets/sted/cards.css" />
   </head>
   <body>
@@ -335,6 +335,12 @@
               <span data-icon="code"></span> Copy code
               <span aria-hidden="true">↗</span>
             </button>
+            <button id="embed" class="button button-ink embed-button">
+              <span data-icon="code"></span>Embed in your website<span
+                aria-hidden="true"
+                >↗</span
+              >
+            </button>
             <div class="export-links">
               <button id="download" class="text-button">
                 <span data-icon="download"></span> Download</button
@@ -342,7 +348,14 @@
                 <span data-icon="link"></span> Share preset
               </button>
             </div>
-            <p id="export-note">One HTML file. No dependencies. All yours.</p>
+            <a
+              class="react-integration-link"
+              href="https://github.com/dantegaleazzi/motion-lab/tree/main/react"
+              target="_blank"
+              rel="noreferrer"
+              >Using React? Get the component ↗</a
+            >
+            <p id="export-note">Embed, HTML or React. All yours.</p>
           </div>
         </aside>
       </div>
@@ -443,6 +456,6 @@
       </div>
       <div id="dialog-content"></div>
     </dialog>
-    <script type="module" src="./app.js?v=controls-2"></script>
+    <script type="module" src="./app.js?v=integrations-1"></script>
   </body>
 </html>

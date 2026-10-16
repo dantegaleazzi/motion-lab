@@ -12,7 +12,7 @@ export function blobData(blob) {
     reader.readAsDataURL(blob);
   });
 }
-export async function makeExample(config, items) {
+export async function makeExample(config, items, { inFrame = false } = {}) {
   const read = async (url) => {
     const r = await fetch(url, {
       cache: "no-store",
@@ -56,5 +56,29 @@ export async function makeExample(config, items) {
     read("./LICENSE").then((r) => r.text()),
     read("./ASSET_LICENSES.md").then((r) => r.text()),
   ]);
-  return `<!doctype html>\n<!--\n${license}\n\n${assetNotice}\n-->\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My motion — Motion Lab by Dante Galeazzi</title><style>${css}\nbody{margin:0;background:#f5f3ee;color:#252722;font-family:system-ui,sans-serif}#motion{height:85vh;min-height:300px}body>footer{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:12px;flex-wrap:wrap}button{background:#252722;color:white;border:0;border-radius:10px;padding:12px 22px;cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #82915b;outline-offset:4px}</style></head><body><div id="motion" role="img" aria-label="Animated image collection"></div><footer><button id="previous" aria-label="Step backward">←</button><button id="play">Pause</button><button id="next" aria-label="Step forward">→</button><a href="https://github.com/dantegaleazzi/motion-lab">Made with Motion Lab by Dante Galeazzi ↗</a></footer><script type="module">\n${engine.replace(/^export /gm, "")}\nconst config=${safeJSON(config)};\nconst items=${safeJSON(images)};\nconst button=document.querySelector('#play');\nconst scene=new MotionScene(document.querySelector('#motion'),items,config,playing=>button.textContent=playing?'Pause':'Play');\nbutton.textContent=scene.playing?'Pause':'Play';\nbutton.addEventListener('click',()=>scene.setPlaying(!scene.playing));\ndocument.querySelector('#previous').addEventListener('click',()=>scene.step(-1));\ndocument.querySelector('#next').addEventListener('click',()=>scene.step(1));\n</script></body></html>`;
+  const embedLayout = inFrame
+    ? "html,body{height:100%;overflow:hidden}#motion{height:calc(100% - 64px);min-height:0}body>footer{box-sizing:border-box;height:64px;padding:8px;gap:10px;flex-wrap:nowrap}body>footer button{font:inherit;min-height:42px;padding:10px 18px}"
+    : "";
+  const attribution = inFrame
+    ? ""
+    : '<a href="https://github.com/dantegaleazzi/motion-lab">Made with Motion Lab by Dante Galeazzi ↗</a>';
+  return `<!doctype html>\n<!--\n${license}\n\n${assetNotice}\n-->\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My motion — Motion Lab by Dante Galeazzi</title><style>${css}\nbody{margin:0;background:#f5f3ee;color:#252722;font-family:system-ui,sans-serif}#motion{height:85vh;min-height:300px}body>footer{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;font-size:12px;flex-wrap:wrap}button{background:#252722;color:white;border:0;border-radius:10px;padding:12px 22px;cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #82915b;outline-offset:4px}${embedLayout}</style></head><body><div id="motion" role="img" aria-label="Animated image collection"></div><footer><button id="previous" aria-label="Step backward">←</button><button id="play">Pause</button><button id="next" aria-label="Step forward">→</button>${attribution}</footer><script type="module">\n${engine.replace(/^export /gm, "")}\nconst config=${safeJSON(config)};\nconst items=${safeJSON(images)};\nconst button=document.querySelector('#play');\nconst scene=new MotionScene(document.querySelector('#motion'),items,config,playing=>button.textContent=playing?'Pause':'Play');\nbutton.textContent=scene.playing?'Pause':'Play';\nbutton.addEventListener('click',()=>scene.setPlaying(!scene.playing));\ndocument.querySelector('#previous').addEventListener('click',()=>scene.step(-1));\ndocument.querySelector('#next').addEventListener('click',()=>scene.step(1));\n</script></body></html>`;
+}
+
+// srcdoc keeps each instance isolated from host CSS, IDs and other embeds.
+// All images, engine code and license notices are inside the pasted snippet.
+export async function makeEmbed(config, items) {
+  const html = await makeExample(config, items, { inFrame: true });
+  const srcdoc = html
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  return `<iframe
+  title="Motion Lab animation"
+  srcdoc="${srcdoc}"
+  style="display:block;width:100%;height:520px;border:0;border-radius:16px"
+  loading="lazy"
+  sandbox="allow-scripts"
+></iframe>`;
 }

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add copy/paste website embeds with self-contained images, sandboxed isolation, playback controls and live preview.
+- Add a reusable React component, a runnable Strict Mode example, integration documentation and lifecycle/export tests.
+
 - Add Tunnel, Carousel and Marquee alongside the three original motion styles.
 - Add Original, Immersive, Gallery and Minimal visual presets.
 - Add full-image cards without captions or gradients, with No frame selected by default and an independent No frame / White frame selector.
