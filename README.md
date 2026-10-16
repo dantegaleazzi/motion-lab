@@ -1,21 +1,53 @@
-# Motion Lab by Dante Galeazzi
+<div align="center">
 
-**A little movement. A lot of possibility.**
+# ✳ Motion Lab
 
-A small, open-source playground for image and card animations. Pick a motion, bring your images, adjust the rhythm, and take a standalone example with you. Vanilla JavaScript, CSS transforms, no runtime packages or build step.
+**Beautiful image animations. Tweak them. Take the code.**
 
-[Try the playground](https://dantegaleazzi.github.io/motion-lab/) · [Contribute](CONTRIBUTING.md) · [MIT code license](LICENSE)
+An open-source playground by [Dante Galeazzi](https://github.com/dantegaleazzi).
 
-## What you can make
+[**Try the playground ↗**](https://dantegaleazzi.github.io/motion-lab/) · [**Get the landing starter**](templates/landing/) · [**Download v0.3.0**](https://github.com/dantegaleazzi/motion-lab/releases/tag/v0.3.0)
 
-- **Portal** — two streams of cards converge toward a central mark.
-- **Orbit** — images move around an elliptical path, with adjustable depth.
-- **Cascade** — a flowing diagonal stream of cards.
-- Three photo collections: **Travel, Objects, Editorial**. Display photos, text cards, or a mix.
-- Speed from **0.25× to 2.5×**, 6–20 cards, size, depth, tilt, reverse direction, and an optional center mark (Portal and Orbit).
-- Pause, restart, fullscreen, and one-click reset.
+[![License: MIT](https://img.shields.io/badge/code-MIT-788650)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/dantegaleazzi/motion-lab?color=788650)](https://github.com/dantegaleazzi/motion-lab/releases)
+[![Checks](https://github.com/dantegaleazzi/motion-lab/actions/workflows/checks.yml/badge.svg)](https://github.com/dantegaleazzi/motion-lab/actions/workflows/checks.yml)
+![Vanilla JS](https://img.shields.io/badge/vanilla-JavaScript-e8dc71?labelColor=30372a)
 
-## Run locally
+[![Motion Lab playground with image cards and live controls](docs/media/playground.jpg)](https://dantegaleazzi.github.io/motion-lab/)
+
+**Your images. Your rhythm. Your next website.**
+
+</div>
+
+## Three ways to move
+
+|                                                Portal                                                 |                                               Orbit                                                |                                                 Cascade                                                  |
+| :---------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| [![Portal animation](docs/media/portal.gif)](https://dantegaleazzi.github.io/motion-lab/#mode=portal) | [![Orbit animation](docs/media/orbit.gif)](https://dantegaleazzi.github.io/motion-lab/#mode=orbit) | [![Cascade animation](docs/media/cascade.gif)](https://dantegaleazzi.github.io/motion-lab/#mode=cascade) |
+|                                   Bring everything into one place.                                    |                                  Give your images room to orbit.                                   |                                        Let the inspiration flow.                                         |
+
+_Real recordings from the playground. Prefer less motion? Open the [static preview](docs/media/playground.jpg)._
+
+## Make something yours in a minute
+
+1. **Pick a motion.** Portal, Orbit or Cascade. Start with Travel, Objects or Editorial photos.
+2. **Bring your images.** Drop files or choose them from your device. They stay in your browser.
+3. **Find your rhythm.** Change speed, count, size, depth, tilt and direction. Start with 16 cards at 210px.
+4. **Take it with you.** Copy or download one HTML file, with the images embedded. Open that exported file directly in a modern browser.
+
+Make a hero for your portfolio, a product showcase, an editorial collection, or a landing page with a little more life. No sign-up. No runtime packages. No build step.
+
+## Want a whole website? Start here.
+
+[![Landing starter with an animated hero](docs/media/landing.jpg)](https://dantegaleazzi.github.io/motion-lab/templates/landing/)
+
+A responsive landing page with the animation already wired up: hero, benefits, story and a final CTA. Change the copy, colors, images and motion in **one config file**, then make it your own.
+
+[**Preview the starter ↗**](https://dantegaleazzi.github.io/motion-lab/templates/landing/) · [**Download template ZIP**](https://github.com/dantegaleazzi/motion-lab/releases/download/v0.3.0/motion-lab-landing-v0.3.0.zip) · [**Customization guide**](templates/landing/README.md)
+
+## Run the playground locally
+
+Download the [source ZIP](https://github.com/dantegaleazzi/motion-lab/archive/refs/tags/v0.3.0.zip), or clone it:
 
 ```sh
 git clone https://github.com/dantegaleazzi/motion-lab.git
@@ -23,66 +55,73 @@ cd motion-lab
 python3 -m http.server 5186 --bind 127.0.0.1
 ```
 
-Open http://127.0.0.1:5186/. Use a static server: the playground loads JavaScript modules and fetches export assets, so opening its `index.html` directly from disk is not supported.
+Open **http://127.0.0.1:5186/**. No install is needed to use the playground. A static server is required because it uses JavaScript modules and loads export assets. The generated standalone HTML files work directly from disk.
 
-## Bring your images
+## Use the engine directly
 
-Drop images into the image picker or choose files. Up to 12 JPG, PNG, WebP, AVIF, or GIF files, each under 10 MB. Images are resized to a maximum dimension of 1000px in the browser; animated images become a still frame. Files remain in memory, never go to a server, and disappear on refresh. Sample photos are served from this repository; the interface loads DM Sans from Google Fonts with a system-font fallback.
+Copy `motion.js` and `scene.css` into your project, include the CSS and give the scene a height:
 
-## Use it in your own project
+```html
+<link rel="stylesheet" href="./scene.css" />
+<div id="my-motion" style="height: 480px"></div>
+<script type="module">
+  import { MotionScene } from "./motion.js";
 
-1. Choose a motion and adjust the controls.
-2. **Copy code** or **Download** prepares a complete HTML document. In the export dialog, choose **Copy HTML** or **Save HTML file**.
-3. Open the exported HTML directly in a modern browser, or adapt its scene markup, styles, and inline script to your site. Exports include embedded images, the shared animation engine, and a play/pause control. They require no server, external fonts, or network requests to animate.
+  const scene = new MotionScene(
+    document.querySelector("#my-motion"),
+    [
+      {
+        src: "./my-photo.jpg",
+        title: "A little inspiration",
+        category: "Explore",
+      },
+    ],
+    { mode: "portal", speed: 1, count: 16, size: 210 },
+  );
 
-You can also reuse `MotionScene` directly:
-
-```js
-import { MotionScene } from "./motion.js";
-const scene = new MotionScene(
-  document.querySelector("#my-scene"),
-  [
-    {
-      src: "./my-photo.jpg",
-      title: "A little inspiration",
-      category: "Travel",
-    },
-  ],
-  { mode: "portal", speed: 0.5, count: 10 },
-);
-// Include scene.css and give #my-scene a height.
-scene.setPlaying(false);
-scene.update({ mode: "orbit", speed: 1 }); // omitted options use defaults
-// scene.destroy() when removing it from your application.
+  // scene.setPlaying(false);
+  // scene.update({ mode: 'orbit', speed: 0.5 });
+  // scene.destroy(); // when removing the scene from your application
+</script>
 ```
 
-**Share preset** copies a URL containing the controls and the selected sample collection. It does not include your local images or filenames. When using your own images, the shared URL falls back to your last selected sample collection. Exported HTML, unlike shared links, does include your images.
+Pass at least one image item. `update()` uses defaults for omitted options; pass your full configuration to preserve customized values. The engine supports pause, restart, resize, visibility handling and cleanup. Keep the MIT notice with copies of the code.
 
-## Accessibility & performance
+## Controls & practical details
 
-The playground and exported examples start paused when `prefers-reduced-motion` is enabled. Visitors can explicitly press Play. Animation stops requesting frames while its canvas is offscreen or the document is hidden. Controls support keyboard use, visible focus, labels, and pressed states. Images are decorative; the scene has a short accessible description.
+| Control         | Range / behavior                                             |
+| --------------- | ------------------------------------------------------------ |
+| Motion          | Portal, Orbit, Cascade                                       |
+| Speed           | 0.25×–2.5×, with Slow / Original / Fast presets              |
+| Card count      | 6–20; default 16                                             |
+| Card size       | 120–260px; default 210px, responsive to the canvas           |
+| Card appearance | Photos, text cards, or mixed                                 |
+| Advanced        | Depth, tilt, reverse direction, center mark                  |
+| Playback        | Play/pause, restart, fullscreen, reset                       |
+| Your images     | Up to 12 JPG, PNG, WebP, AVIF or GIF files, under 10 MB each |
+| Exports         | Standalone HTML with images and license notices included     |
+| Sharing         | A URL with your configuration and a sample collection        |
 
-## Project map
+Images are resized in the browser to a maximum dimension of 1000px. Animated inputs become a still frame. Local images disappear on refresh and are **not** included in shared preset links; they **are** included in exported HTML. The interface loads DM Sans from Google Fonts with a system-font fallback; exports use system fonts and do not need network requests to animate.
 
-| File                       | Purpose                                                |
-| -------------------------- | ------------------------------------------------------ |
-| `index.html`, `styles.css` | Playground interface and responsive layout             |
-| `app.js`                   | Controls, local images, fullscreen, sharing            |
-| `motion.js`, `scene.css`   | Shared animation engine and card appearance            |
-| `export.js`                | Self-contained HTML export                             |
-| `data.js`, `assets/`       | Sample collections, photos and source credits          |
-| `motion.test.js`           | Geometry, preset validation and export escaping checks |
+This release does not export video/GIF and is not an npm package or a ready-made React component. See [release notes](CHANGELOG.md) and [browser QA](docs/BROWSER_QA.md) for the exact scope and verification limits.
 
-Run `npm test` with Node.js 20+; no install is needed. Browser QA covers the interactive behaviors separately.
+## Originally built for Sted
+
+[![Sted's original landing with cards converging on its mascot](examples/sted/preview.jpg)](https://dantegaleazzi.github.io/motion-lab/examples/sted/)
+
+I built the original portal animation for Sted, then opened it up as Motion Lab. The historical landing is preserved as a case, with a button to load its cards and motion into the playground. Sted is an example; Motion Lab is an independent project.
+
+[**Explore the original ↗**](https://dantegaleazzi.github.io/motion-lab/examples/sted/)
+
+## Contribute a little movement
+
+Ideas, browser fixes, useful presets and thoughtful new motions are welcome. [Read the contribution guide](CONTRIBUTING.md), [report a bug](https://github.com/dantegaleazzi/motion-lab/issues) or open a focused pull request with a screenshot or recording.
+
+With Node.js 22 or newer, run `npm test` — no package install is required. Checks run automatically on pushes and pull requests. Motion geometry lives in `motion.js`, the shared styles in `scene.css`, and exports reuse the same engine. [Possible next experiments](IDEAS.md).
 
 ## License & credits
 
-Playground code is [MIT licensed](LICENSE). Sted archive assets, brand artwork and third-party saved-content previews are separately credited in [the archive notes](examples/sted/README.md). Sample photographs are **not covered by MIT**: they are distributed under the [Unsplash License](https://unsplash.com/license), with source links in [assets/credits.json](assets/credits.json). The interface includes Photo credits. The DM Sans interface font is provided by Google Fonts. Use images you have the right to distribute when sharing exported examples.
+**Code: [MIT](LICENSE). Assets: [separate notices](ASSET_LICENSES.md).** Sample photos use the Unsplash License. Sted brand artwork and third-party content previews belong to their respective owners and are included for the historical case. Use your own branding and images for your projects, or comply with the applicable asset license. Exported HTML carries the code and asset notices; the visible attribution link is optional under MIT.
 
-Built by [Dante Galeazzi](https://github.com/dantegaleazzi).
-
-## The Sted original
-
-[Explore the historical landing](https://dantegaleazzi.github.io/motion-lab/examples/sted/). The case recovers the original landing at commit `be5f8de` as a static snapshot with its original CSS animation. Its waitlist is demonstrative. “Try this animation” loads the Sted cards, mascot, 16-card layout and 6.321752-second portal preset into the editable playground. [Archive notes and asset licensing](examples/sted/README.md).
-
-Motion Lab is an independent project by Dante Galeazzi. Sted is included as its original example case.
+Built by [**Dante Galeazzi**](https://github.com/dantegaleazzi). If you make something with it, [share it in an issue](https://github.com/dantegaleazzi/motion-lab/issues) — I'd love to see it.

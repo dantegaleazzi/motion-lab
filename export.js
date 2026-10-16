@@ -44,7 +44,7 @@ export async function makeExample(config, items) {
     }
     return result;
   };
-  const [css, engine, images] = await Promise.all([
+  const [css, engine, images, license, assetNotice] = await Promise.all([
     Promise.all([
       read("./scene.css").then((r) => r.text()),
       config.collection === "sted"
@@ -53,6 +53,8 @@ export async function makeExample(config, items) {
     ]).then((parts) => parts.join("\n")),
     read("./motion.js").then((r) => r.text()),
     Promise.all(items.map(exportItem)),
+    read("./LICENSE").then((r) => r.text()),
+    read("./ASSET_LICENSES.md").then((r) => r.text()),
   ]);
-  return `<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My motion — Motion Lab by Dante Galeazzi</title><style>${css}\nbody{margin:0;background:#f5f3ee;color:#252722;font-family:system-ui,sans-serif}#motion{height:85vh;min-height:300px}body>footer{display:flex;align-items:center;justify-content:center;gap:20px;padding:16px;font-size:12px}button{background:#252722;color:white;border:0;border-radius:10px;padding:12px 22px;cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #82915b;outline-offset:4px}</style></head><body><div id="motion" role="img" aria-label="Animated image collection"></div><footer><button id="play">Pause</button><a href="https://github.com/dantegaleazzi/motion-lab">Made with Motion Lab by Dante Galeazzi ↗</a></footer><script type="module">\n${engine.replace(/^export /gm, "")}\nconst config=${safeJSON(config)};\nconst items=${safeJSON(images)};\nconst button=document.querySelector('#play');\nconst scene=new MotionScene(document.querySelector('#motion'),items,config,playing=>button.textContent=playing?'Pause':'Play');\nbutton.textContent=scene.playing?'Pause':'Play';\nbutton.addEventListener('click',()=>scene.setPlaying(!scene.playing));\n</script></body></html>`;
+  return `<!doctype html>\n<!--\n${license}\n\n${assetNotice}\n-->\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My motion — Motion Lab by Dante Galeazzi</title><style>${css}\nbody{margin:0;background:#f5f3ee;color:#252722;font-family:system-ui,sans-serif}#motion{height:85vh;min-height:300px}body>footer{display:flex;align-items:center;justify-content:center;gap:20px;padding:16px;font-size:12px}button{background:#252722;color:white;border:0;border-radius:10px;padding:12px 22px;cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #82915b;outline-offset:4px}</style></head><body><div id="motion" role="img" aria-label="Animated image collection"></div><footer><button id="play">Pause</button><a href="https://github.com/dantegaleazzi/motion-lab">Made with Motion Lab by Dante Galeazzi ↗</a></footer><script type="module">\n${engine.replace(/^export /gm, "")}\nconst config=${safeJSON(config)};\nconst items=${safeJSON(images)};\nconst button=document.querySelector('#play');\nconst scene=new MotionScene(document.querySelector('#motion'),items,config,playing=>button.textContent=playing?'Pause':'Play');\nbutton.textContent=scene.playing?'Pause':'Play';\nbutton.addEventListener('click',()=>scene.setPlaying(!scene.playing));\n</script></body></html>`;
 }

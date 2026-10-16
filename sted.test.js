@@ -69,6 +69,11 @@ test("Sted HTML export embeds card photos, platform icons and mascot without imp
       collections.sted,
     );
     assert.ok(html.includes("Motion Lab by Dante Galeazzi"));
+    assert.ok(html.includes("Permission is hereby granted, free of charge"));
+    assert.ok(
+      html.includes("The above copyright notice and this permission notice"),
+    );
+    assert.ok(html.includes("# Asset licenses and credits"));
     const script = html.match(/<script type="module">([\s\S]*)<\/script>/)[1];
     assert.doesNotThrow(() => new Function(script));
     assert.ok(!/^import /m.test(script));
