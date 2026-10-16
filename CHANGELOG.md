@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add Tunnel, Carousel and Marquee alongside the three original motion styles.
+- Add Original, Immersive, Gallery and Minimal visual presets.
+- Add full-image cards without captions or gradients, with No frame selected by default and an independent No frame / White frame selector.
+- Add smooth backward/forward steps in the playground, landing starter and HTML exports, including while paused; reduced-motion users get immediate steps.
+
 ## v0.3.0 — 2026-10-16
 
 First public release of **Motion Lab by Dante Galeazzi**.

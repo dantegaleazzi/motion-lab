@@ -8,8 +8,8 @@
       content="An open-source landing page starter with image motion built in, by Dante Galeazzi."
     />
     <title>Elsewhere — Motion Lab landing starter</title>
-    <link rel="stylesheet" href="../../scene.css" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../../scene.css?v=controls-2" />
+    <link rel="stylesheet" href="./styles.css?v=controls-2" />
   </head>
   <body>
     <div class="template-bar">
@@ -48,8 +48,32 @@
             role="img"
             aria-label="A flowing collection of inspiration images"
           ></div>
-          <button id="play" class="play" type="button">Pause motion</button
-          ><span class="canvas-note">A LITTLE INSPIRATION GOES A LONG WAY</span>
+          <div
+            class="motion-controls"
+            role="group"
+            aria-label="Animation playback"
+          >
+            <button
+              id="previous"
+              class="motion-arrow"
+              type="button"
+              aria-label="Step backward"
+              title="Step backward"
+            >
+              ←
+            </button>
+            <button id="play" class="play" type="button">Pause motion</button>
+            <button
+              id="next"
+              class="motion-arrow"
+              type="button"
+              aria-label="Step forward"
+              title="Step forward"
+            >
+              →
+            </button>
+          </div>
+          <span class="canvas-note">A LITTLE INSPIRATION GOES A LONG WAY</span>
         </div>
       </section>
       <section class="features" id="possibilities">
@@ -123,6 +147,6 @@
         >Made with Motion Lab ↗</a
       >
     </footer>
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="./main.js?v=controls-2"></script>
   </body>
 </html>

@@ -330,3 +330,31 @@ footer > span {
     scroll-behavior: auto;
   }
 }
+
+.motion-controls {
+  position: absolute;
+  bottom: 22px;
+  left: 5%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.motion-controls .play {
+  position: static;
+  min-height: 42px;
+}
+.motion-arrow {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #dce0d2;
+  border-radius: 50%;
+  background: #ffffffd9;
+  color: #445137;
+  font-size: 20px;
+}
+.motion-arrow:hover {
+  background: #e9ecdf;
+}
+.motion-arrow:active {
+  background: #dce3cd;
+}

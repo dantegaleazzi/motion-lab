@@ -12,6 +12,6 @@ A responsive website with a Motion Lab hero, feature blocks, story section and a
 
 With the full repo, serve its root and open `/templates/landing/`. The source references the shared engine and photos two directories above. The template ZIP includes local copies and adjusted paths so it works independently.
 
-Set `motion.mode` to `portal`, `orbit` or `cascade`, and adjust speed, count, size, depth and tilt. It starts with 16 cards at 210px. Visitors can pause; reduced-motion preferences start it paused. Use configuration values from the playground's shared URL to customize it.
+Set `motion.mode` to `portal`, `orbit`, `cascade`, `tunnel`, `carousel` or `marquee`, and adjust speed, count, size, depth and tilt. It starts with 16 cards at 210px. Set `motion.format` to `full` for edge-to-edge images without text or borders. Visitors can pause or step backward/forward; reduced-motion preferences start it paused. Use configuration values from the playground's shared URL to customize it.
 
 Code: MIT; retain LICENSE. Sample photos: Unsplash, credited separately in ASSET_LICENSES.md and assets/credits.json in the ZIP. Replace them or follow their license. “Elsewhere” is illustrative starter copy. The starter includes no Sted branding, analytics, auth, checkout or form service; its contact button is a sample email link.

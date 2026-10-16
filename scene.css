@@ -164,3 +164,24 @@
   width: 65px;
   height: 85px;
 }
+
+/* Edge-to-edge photography: no copy, gradient, frame or extra chrome. */
+.scene-card--full {
+  border: 0;
+  border-radius: 12px;
+}
+.scene-card--full .scene-card-copy {
+  display: none;
+}
+.motion-scene[data-mode="tunnel"] .motion-hub,
+.motion-scene[data-mode="carousel"] .motion-hub,
+.motion-scene[data-mode="marquee"] .motion-hub {
+  display: none;
+}
+
+.scene-card--borderless {
+  border: 0;
+}
+.scene-card--full.scene-card--framed {
+  border: 5px solid #fff;
+}

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalize, frameAt } from "./motion.js";
+import { normalize, frameAt, MotionScene } from "./motion.js";
 import { safeJSON } from "./export.js";
 test("shared presets cannot inject unknown modes or unbounded geometry", () => {
   const c = normalize({
@@ -20,7 +20,14 @@ test("shared presets cannot inject unknown modes or unbounded geometry", () => {
   assert.equal(c.center, false);
 });
 test("all motions stay finite across viewports, boundaries and depth extremes", () => {
-  for (const mode of ["portal", "orbit", "cascade"])
+  for (const mode of [
+    "portal",
+    "orbit",
+    "cascade",
+    "tunnel",
+    "carousel",
+    "marquee",
+  ])
     for (const width of [0, 320, 1440])
       for (const depth of [0, 1])
         for (const p of [0, 0.001, 0.25, 0.5, 0.99, 1]) {
@@ -44,4 +51,71 @@ test("exported titles cannot close the script element", () => {
   const json = safeJSON(value);
   assert.ok(!json.includes("<"));
   assert.deepEqual(JSON.parse(json), value);
+});
+
+test("manual navigation wraps, respects reverse and preserves paused playback", () => {
+  for (const mode of [
+    "portal",
+    "orbit",
+    "cascade",
+    "tunnel",
+    "carousel",
+    "marquee",
+  ])
+    for (const direction of [-1, 1]) {
+      const scene = Object.assign(Object.create(MotionScene.prototype), {
+        config: normalize({ mode, direction }),
+        phase: 0.99,
+        pendingStep: 0,
+        playing: false,
+        media: { matches: true },
+        draw() {},
+      });
+      scene.step(1);
+      assert.ok(scene.phase >= 0 && scene.phase < 1);
+      scene.step(-1);
+      assert.ok(Math.abs(scene.phase - 0.99) < 1e-9);
+      assert.equal(scene.playing, false);
+      scene.step(NaN);
+      assert.ok(Number.isFinite(scene.phase));
+    }
+});
+
+test("a paused scene can smoothly step and stops scheduling when settled", () => {
+  const previousFrame = globalThis.requestAnimationFrame;
+  const previousDocument = globalThis.document;
+  let scheduled = 0;
+  globalThis.requestAnimationFrame = () => ++scheduled;
+  globalThis.document = { hidden: false };
+  try {
+    const scene = Object.assign(Object.create(MotionScene.prototype), {
+      config: normalize({ mode: "carousel" }),
+      phase: 0.08,
+      pendingStep: 0,
+      playing: false,
+      inView: true,
+      media: { matches: false },
+      last: 0,
+      draw() {},
+      schedule() {},
+    });
+    scene.step(1);
+    for (let i = 1; i <= 120; i++) scene.tick(i * 16);
+    assert.equal(scene.pendingStep, 0);
+    assert.ok(Math.abs(scene.phase - (0.08 + 1 / 16)) < 1e-9);
+    assert.equal(scene.playing, false);
+    const before = scheduled;
+    scene.tick(2000);
+    assert.equal(scheduled, before);
+  } finally {
+    globalThis.requestAnimationFrame = previousFrame;
+    globalThis.document = previousDocument;
+  }
+});
+
+test("full-image presets default to no frame while allowing an explicit white frame", () => {
+  assert.equal(normalize({ format: "full" }).frame, "none");
+  assert.equal(normalize({ format: "full", frame: "white" }).frame, "white");
+  assert.equal(normalize({ frame: "none" }).frame, "none");
+  assert.equal(normalize({ frame: "invalid" }).frame, "white");
 });

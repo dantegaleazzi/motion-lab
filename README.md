@@ -30,10 +30,11 @@ _Real recordings from the playground. Prefer less motion? Open the [static previ
 
 ## Make something yours in a minute
 
-1. **Pick a motion.** Portal, Orbit or Cascade. Start with Travel, Objects or Editorial photos.
-2. **Bring your images.** Drop files or choose them from your device. They stay in your browser.
-3. **Find your rhythm.** Change speed, count, size, depth, tilt and direction. Start with 16 cards at 210px.
-4. **Take it with you.** Copy or download one HTML file, with the images embedded. Open that exported file directly in a modern browser.
+1. **Pick a motion.** Portal, Orbit, Cascade, Tunnel, Carousel or Marquee. Start with Travel, Objects or Editorial photos.
+2. **Pick a look.** Original, Immersive, Gallery or Minimal presets combine motion and card styling in one click. Use Full image for edge-to-edge photography without text or frames.
+3. **Bring your images.** Drop files or choose them from your device. They stay in your browser.
+4. **Find your rhythm.** Change speed, count, size, depth, tilt and direction. Start with 16 cards at 210px.
+5. **Take it with you.** Copy or download one HTML file, with the images embedded. Open that exported file directly in a modern browser.
 
 Make a hero for your portfolio, a product showcase, an editorial collection, or a landing page with a little more life. No sign-up. No runtime packages. No build step.
 
@@ -80,6 +81,7 @@ Copy `motion.js` and `scene.css` into your project, include the CSS and give the
   );
 
   // scene.setPlaying(false);
+  // scene.step(1);  // move forward; -1 moves backward, including while paused
   // scene.update({ mode: 'orbit', speed: 0.5 });
   // scene.destroy(); // when removing the scene from your application
 </script>
@@ -89,18 +91,21 @@ Pass at least one image item. `update()` uses defaults for omitted options; pass
 
 ## Controls & practical details
 
-| Control         | Range / behavior                                             |
-| --------------- | ------------------------------------------------------------ |
-| Motion          | Portal, Orbit, Cascade                                       |
-| Speed           | 0.25×–2.5×, with Slow / Original / Fast presets              |
-| Card count      | 6–20; default 16                                             |
-| Card size       | 120–260px; default 210px, responsive to the canvas           |
-| Card appearance | Photos, text cards, or mixed                                 |
-| Advanced        | Depth, tilt, reverse direction, center mark                  |
-| Playback        | Play/pause, restart, fullscreen, reset                       |
-| Your images     | Up to 12 JPG, PNG, WebP, AVIF or GIF files, under 10 MB each |
-| Exports         | Standalone HTML with images and license notices included     |
-| Sharing         | A URL with your configuration and a sample collection        |
+The expanded motion styles, visual presets and frame controls are available on `main`. The published v0.3.0 ZIPs retain the original three-motion release.
+
+| Control         | Range / behavior                                              |
+| --------------- | ------------------------------------------------------------- |
+| Motion          | Portal, Orbit, Cascade, Tunnel, Carousel, Marquee             |
+| Speed           | 0.25×–2.5×, with Slow / Original / Fast presets               |
+| Card count      | 6–20; default 16                                              |
+| Card size       | 120–260px; default 210px, responsive to the canvas            |
+| Card appearance | Mixed, photo + text, text cards, or full image                |
+| Image border    | No frame or White frame, independent of card style            |
+| Advanced        | Depth, tilt, reverse direction, center mark                   |
+| Playback        | Play/pause, step backward/forward, restart, fullscreen, reset |
+| Your images     | Up to 12 JPG, PNG, WebP, AVIF or GIF files, under 10 MB each  |
+| Exports         | Standalone HTML with images and license notices included      |
+| Sharing         | A URL with your configuration and a sample collection         |
 
 Images are resized in the browser to a maximum dimension of 1000px. Animated inputs become a still frame. Local images disappear on refresh and are **not** included in shared preset links; they **are** included in exported HTML. The interface loads DM Sans from Google Fonts with a system-font fallback; exports use system fonts and do not need network requests to animate.
 

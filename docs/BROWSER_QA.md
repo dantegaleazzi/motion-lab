@@ -18,3 +18,14 @@ This records what was actually verified for the first release, rather than claim
 - Native app capture was unavailable on this host, so no separate desktop Safari run is claimed.
 
 Reduced-motion pause and visibility handling are implemented in the shared engine. A physical-device review remains useful before promising a supported mobile-browser matrix.
+
+
+## Navigation and visual options follow-up — 2026-10-16
+
+- Ten Node tests pass, including all six motions, navigation wrap/reverse, paused easing and the full-image frame default.
+- In-app browser: all six motion buttons set the matching engine mode and label. All four visual presets select the intended geometry and card styling.
+- Full image / No frame: computed border is 0px and there are no caption elements on the sample image cards. White frame restores the border; No frame removes it again.
+- Forward/backward navigation moves cards while keeping playback paused. The landing starter and standalone carousel HTML also respond to manual steps.
+- Desktop and narrow layouts checked. The narrow browser reported an actual CSS viewport of 354px (390px override with existing browser zoom): no horizontal overflow; step controls are approximately 44px square. Template also has no horizontal overflow at the narrow viewport.
+- All six full-image standalone HTML exports parse and include navigation plus frame configuration; a standalone carousel export was opened through a separate local HTTP server and checked for borderless images and a working forward step. Direct file: opening and physical-device checks were not repeated.
+- Entry modules and changed styles use a cache version so existing preview sessions receive the new controls.

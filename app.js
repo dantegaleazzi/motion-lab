@@ -1,10 +1,12 @@
-import { defaults, normalize, MotionScene } from "./motion.js";
+import { defaults, normalize, MotionScene } from "./motion.js?v=controls-2";
 import { collections } from "./data.js";
-import { makeExample } from "./export.js";
+import { makeExample } from "./export.js?v=controls-2";
 const $ = (selector) => document.querySelector(selector);
 const icons = {
   pause: '<path d="M8 5v14M16 5v14"/>',
   play: '<path d="m8 5 11 7-11 7Z"/>',
+  previous: '<path d="m14 6-6 6 6 6M8 12h12"/>',
+  next: '<path d="m10 6 6 6-6 6M4 12h12"/>',
   restart: '<path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/>',
   expand: '<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
   upload: '<path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/>',
@@ -20,6 +22,56 @@ function icon(name) {
 document
   .querySelectorAll("[data-icon]")
   .forEach((el) => (el.innerHTML = icon(el.dataset.icon)));
+const looks = {
+  original: {
+    mode: "portal",
+    format: "mixed",
+    frame: "white",
+    speed: 1,
+    count: 16,
+    size: 210,
+    depth: 0.85,
+    tilt: 28,
+    center: true,
+    direction: 1,
+  },
+  immersive: {
+    mode: "portal",
+    format: "full",
+    frame: "none",
+    speed: 1,
+    count: 16,
+    size: 260,
+    depth: 1,
+    tilt: 24,
+    center: false,
+    direction: 1,
+  },
+  gallery: {
+    mode: "carousel",
+    format: "full",
+    frame: "none",
+    speed: 0.75,
+    count: 10,
+    size: 240,
+    depth: 0.8,
+    tilt: 30,
+    center: false,
+    direction: 1,
+  },
+  minimal: {
+    mode: "marquee",
+    format: "full",
+    frame: "none",
+    speed: 0.75,
+    count: 10,
+    size: 180,
+    depth: 0,
+    tilt: 0,
+    center: false,
+    direction: 1,
+  },
+};
 let config = normalize(
   Object.fromEntries(new URLSearchParams(location.hash.slice(1))),
 );
@@ -48,7 +100,7 @@ function updatePlayback(playing) {
 }
 function sync() {
   scene.update(config, custom || collections[config.collection]);
-  for (const key of ["mode", "collection", "format"])
+  for (const key of ["mode", "collection", "format", "frame"])
     document
       .querySelectorAll(`[data-${key}]`)
       .forEach((el) =>
@@ -86,12 +138,24 @@ function sync() {
         String(Number(el.dataset.speed) === config.speed),
       ),
     );
+  document.querySelectorAll("[data-look]").forEach((button) => {
+    const look = looks[button.dataset.look];
+    button.setAttribute(
+      "aria-pressed",
+      String(
+        Object.entries(look).every(([key, value]) => config[key] === value),
+      ),
+    );
+  });
   $("#reverse").checked = config.direction === -1;
   $("#center").checked = config.center;
   $("#motion-name").textContent = {
     portal: "01 / Portal",
     orbit: "02 / Orbit",
     cascade: "03 / Cascade",
+    tunnel: "04 / Tunnel",
+    carousel: "05 / Carousel",
+    marquee: "06 / Marquee",
   }[config.mode];
   $("#sted-preset-note").hidden = config.collection !== "sted" || !!custom;
   $("#clear-images").hidden = !custom;
@@ -109,11 +173,18 @@ function set(patch) {
   sync();
 }
 document
-  .querySelectorAll("[data-mode],[data-format],[data-speed]")
+  .querySelectorAll("[data-mode],[data-format],[data-speed],[data-frame]")
   .forEach((button) =>
     button.addEventListener("click", () => {
-      const key = ["mode", "format", "speed"].find((k) => button.dataset[k]);
-      set({ [key]: button.dataset[key] });
+      const key = ["mode", "format", "speed", "frame"].find(
+        (k) => button.dataset[k],
+      );
+      set({
+        [key]: button.dataset[key],
+        ...(key === "format" && button.dataset[key] === "full"
+          ? { frame: "none" }
+          : {}),
+      });
     }),
   );
 document.querySelectorAll("[data-collection]").forEach((button) =>
@@ -133,6 +204,13 @@ $("#reverse").addEventListener("change", (e) =>
 $("#center").addEventListener("change", (e) =>
   set({ center: e.target.checked }),
 );
+document
+  .querySelectorAll("[data-look]")
+  .forEach((button) =>
+    button.addEventListener("click", () => set(looks[button.dataset.look])),
+  );
+$("#previous").addEventListener("click", () => scene.step(-1));
+$("#next").addEventListener("click", () => scene.step(1));
 $("#play").addEventListener("click", () => scene.setPlaying(!scene.playing));
 $("#restart").addEventListener("click", () => scene.restart());
 $("#reset").addEventListener("click", () => {

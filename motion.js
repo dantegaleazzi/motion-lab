@@ -2,6 +2,7 @@ export const defaults = Object.freeze({
   mode: "portal",
   collection: "travel",
   format: "mixed",
+  frame: "white",
   speed: 1,
   count: 16,
   size: 210,
@@ -16,7 +17,14 @@ export function normalize(input = {}) {
       ? Math.min(high, Math.max(low, Number(input[key])))
       : defaults[key];
   return {
-    mode: ["portal", "orbit", "cascade"].includes(input.mode)
+    mode: [
+      "portal",
+      "orbit",
+      "cascade",
+      "tunnel",
+      "carousel",
+      "marquee",
+    ].includes(input.mode)
       ? input.mode
       : defaults.mode,
     collection: ["travel", "objects", "editorial", "sted"].includes(
@@ -24,9 +32,14 @@ export function normalize(input = {}) {
     )
       ? input.collection
       : defaults.collection,
-    format: ["mixed", "photos", "cards"].includes(input.format)
+    format: ["mixed", "photos", "cards", "full"].includes(input.format)
       ? input.format
       : defaults.format,
+    frame: ["white", "none"].includes(input.frame)
+      ? input.frame
+      : input.format === "full"
+        ? "none"
+        : defaults.frame,
     speed: number("speed", 0.25, 2.5),
     count: Math.round(number("count", 6, 20) / 2) * 2,
     size: number("size", 120, 260),
@@ -81,6 +94,26 @@ export function frameAt(p, index, config, width, height) {
     z = 1200 * (1 - 1 / scale);
     rotateY = Math.cos(theta) * config.tilt * 0.45;
     opacity = 0.65 + (0.35 * (1 + Math.sin(theta))) / 2;
+  } else if (config.mode === "tunnel") {
+    const angle = ((index % 8) * Math.PI) / 4;
+    const scale = 0.18 + p * (0.82 + config.depth * 0.25);
+    const spread = Math.pow(p, 1.6);
+    x = (Math.cos(angle) * (width * 0.68 + cardWidth) * spread) / scale;
+    y = (Math.sin(angle) * (height * 0.65 + cardWidth) * spread) / scale;
+    z = 1200 * (1 - 1 / scale);
+    rotateZ = Math.sin(angle) * config.tilt * 0.3;
+    opacity = Math.min(p / 0.08, (1 - p) / 0.16, 1);
+  } else if (config.mode === "carousel") {
+    const theta = p * Math.PI * 2;
+    const front = (1 + Math.cos(theta)) / 2;
+    const scale = 1 - config.depth * 0.62 * (1 - front);
+    x = (Math.sin(theta) * Math.max(38, width * 0.43)) / scale;
+    z = 1200 * (1 - 1 / scale);
+    rotateY = -Math.sin(theta) * config.tilt;
+    opacity = 0.25 + front * 0.75;
+  } else if (config.mode === "marquee") {
+    x = (width / 2 + cardWidth) * (1 - 2 * p);
+    opacity = Math.min(p / 0.04, (1 - p) / 0.04, 1);
   } else {
     const scale = 1 - config.depth * 0.18;
     x = ((width / 2 + cardWidth) * (1 - 2 * p)) / scale;
@@ -109,6 +142,7 @@ export class MotionScene {
     this.config = normalize(config);
     this.onState = onState;
     this.phase = 0.08;
+    this.pendingStep = 0;
     this.last = 0;
     this.inView = true;
     this.destroyed = false;
@@ -162,14 +196,18 @@ export class MotionScene {
     this.cards = Array.from({ length: this.config.count }, (_, index) => {
       const item = this.items[index % this.items.length];
       const card = document.createElement("article");
+      const frameClass =
+        this.config.frame === "none"
+          ? "scene-card--borderless"
+          : "scene-card--framed";
       // markup is frozen local Sted source, never accepted from a URL or uploaded file.
       if (item.markup) {
-        card.className = "scene-card scene-card--sted";
+        card.className = "scene-card scene-card--sted " + frameClass;
         const template = document.createElement("template");
         template.innerHTML = item.markup;
         card.append(template.content.cloneNode(true));
         if (
-          this.config.format === "photos" &&
+          ["photos", "full"].includes(this.config.format) &&
           card.querySelector(".visual-card__image")
         )
           card.classList.add("scene-card--sted-photo");
@@ -180,14 +218,20 @@ export class MotionScene {
             .querySelector(".visual-card")
             ?.classList.add("visual-card--text");
         }
+        if (this.config.format === "full")
+          card.classList.add("scene-card--full");
         this.layer.append(card);
         return card;
       }
       const photo =
-        this.config.format === "photos" ||
+        ["photos", "full"].includes(this.config.format) ||
         (this.config.format === "mixed" && index % 3 !== 2);
       card.className =
-        "scene-card " + (photo ? "scene-card--photo" : "scene-card--text");
+        "scene-card " +
+        (photo ? "scene-card--photo" : "scene-card--text") +
+        " " +
+        frameClass;
+      if (this.config.format === "full") card.classList.add("scene-card--full");
       card.style.setProperty(
         "--tone",
         ["#eef1e6", "#f5e4d9", "#e7edf4"][index % 3],
@@ -211,7 +255,7 @@ export class MotionScene {
         ? "A little inspiration ↗"
         : "A thought worth coming back to. ↗";
       copy.append(label, title, footer);
-      card.append(copy);
+      if (this.config.format !== "full") card.append(copy);
       this.layer.append(card);
       return card;
     });
@@ -220,7 +264,10 @@ export class MotionScene {
     const next = normalize(config);
     const rebuild =
       items !== this.items ||
-      ["count", "format", "mode"].some((k) => next[k] !== this.config[k]);
+      ["count", "format", "mode", "frame"].some(
+        (k) => next[k] !== this.config[k],
+      );
+    this.pendingStep = 0;
     this.config = next;
     this.items = items;
     if (rebuild) this.build();
@@ -228,30 +275,66 @@ export class MotionScene {
     this.draw();
   }
   setPlaying(value) {
+    this.pendingStep = 0;
     this.playing = value;
     this.onState(value);
     this.schedule();
   }
   restart() {
+    this.pendingStep = 0;
     this.phase = 0.08;
     this.draw();
+    this.schedule();
+  }
+  step(direction = 1) {
+    if (this.destroyed || !Number.isFinite(direction) || !direction) return;
+    const distance =
+      (Math.sign(direction) *
+        this.config.direction *
+        (this.config.mode === "portal" ? 2 : 1)) /
+      this.config.count;
+    if (this.media.matches) {
+      this.phase = (((this.phase + distance) % 1) + 1) % 1;
+      this.draw();
+    } else {
+      this.pendingStep += distance;
+      this.schedule();
+    }
   }
   schedule() {
     cancelAnimationFrame(this.raf);
     this.last = 0;
-    if (!this.destroyed && this.playing && this.inView && !document.hidden)
+    if (
+      !this.destroyed &&
+      (this.playing || this.pendingStep) &&
+      this.inView &&
+      !document.hidden
+    )
       this.raf = requestAnimationFrame((t) => this.tick(t));
   }
   tick(now) {
     const delta = this.last ? Math.min((now - this.last) / 1000, 0.05) : 0;
     this.last = now;
-    this.phase =
-      (this.phase +
-        (delta * this.config.speed * this.config.direction) / 6.321752 +
-        1) %
-      1;
+    let movement = this.playing
+      ? (delta * this.config.speed * this.config.direction) / 6.321752
+      : 0;
+    if (this.pendingStep) {
+      const step =
+        Math.abs(this.pendingStep) < 0.0001
+          ? this.pendingStep
+          : this.pendingStep * (1 - Math.exp(-delta * 16));
+      movement += step;
+      this.pendingStep -= step;
+    }
+    this.phase = (((this.phase + movement) % 1) + 1) % 1;
     this.draw();
-    this.raf = requestAnimationFrame((t) => this.tick(t));
+    if (
+      !this.destroyed &&
+      (this.playing || this.pendingStep) &&
+      this.inView &&
+      !document.hidden
+    )
+      this.raf = requestAnimationFrame((t) => this.tick(t));
   }
   draw() {
     this.cards?.forEach((card, index) => {

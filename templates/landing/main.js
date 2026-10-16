@@ -1,4 +1,4 @@
-import { MotionScene } from "../../motion.js";
+import { MotionScene } from "../../motion.js?v=controls-2";
 import { site, motion, images } from "./config.js";
 const $ = (selector) => document.querySelector(selector);
 document.title = site.brand + " — " + site.headline + " " + site.highlight;
@@ -31,3 +31,8 @@ const scene = new MotionScene($("#motion"), images, motion, (playing) => {
 });
 button.textContent = scene.playing ? "Pause motion" : "Play motion";
 button.addEventListener("click", () => scene.setPlaying(!scene.playing));
+
+document
+  .querySelector("#previous")
+  .addEventListener("click", () => scene.step(-1));
+document.querySelector("#next").addEventListener("click", () => scene.step(1));

@@ -1021,3 +1021,176 @@ dialog::backdrop {
     margin-top: 28px;
   }
 }
+
+/* Compact, tactile choices; the canvas keeps the focus. */
+.step-button {
+  min-width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 50%;
+}
+.step-button:active {
+  background: #e9ecdf;
+}
+.transport-buttons {
+  flex-shrink: 0;
+}
+.control-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #69715d;
+  margin: 20px 0 10px;
+}
+.control-section > .control-label:first-of-type {
+  margin-top: 0;
+}
+.look-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.look-picker button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fafaf7;
+  font-size: 10px;
+}
+.look-picker button[aria-pressed="true"] {
+  background: #e9ecdf;
+  border-color: #9ba56a;
+  color: #3d4b28;
+}
+.format-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.format-picker button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  min-height: 58px;
+  padding: 8px;
+  text-align: left;
+  font-size: 10px;
+  background: #fafaf7;
+}
+.format-picker button[aria-pressed="true"] {
+  background: #f2f4e8;
+  border-color: #9ba56a;
+  box-shadow: 0 0 0 1px #9ba56a;
+}
+.format-sample {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 26px;
+  height: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sample-full {
+  background: url("./assets/alpine.jpg") center/cover;
+}
+.sample-photo {
+  border: 2px solid white;
+  background: url("./assets/alpine.jpg") center/cover;
+}
+.sample-photo::after {
+  content: "";
+  position: absolute;
+  inset: 22px 2px 4px;
+  border-top: 2px solid white;
+  border-bottom: 1px solid white;
+  background: #25272288;
+}
+.sample-text {
+  background: #e3e9d7;
+  border: 2px solid white;
+}
+.sample-text::after {
+  content: "";
+  position: absolute;
+  inset: 13px 4px 12px;
+  border-top: 2px solid #71804f;
+  border-bottom: 2px solid #71804f;
+}
+.sample-mixed {
+  background:
+    linear-gradient(110deg, transparent 55%, #e3e9d7 55%),
+    url("./assets/alpine.jpg") center/cover;
+  border: 2px solid white;
+}
+@media (max-width: 900px) {
+  .transport {
+    flex-wrap: wrap;
+  }
+  .transport > span {
+    flex-basis: 140px;
+  }
+}
+@media (max-width: 600px) {
+  .transport {
+    gap: 10px;
+  }
+  .transport > span {
+    flex-basis: 100%;
+    order: 3;
+  }
+  .transport #reset {
+    margin-left: auto;
+  }
+  .step-button {
+    min-width: 44px;
+    height: 44px;
+  }
+  .look-picker button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .format-picker button {
+    font-size: 12px;
+  }
+}
+
+.frame-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.frame-picker button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fafaf7;
+  font-size: 10px;
+}
+.frame-picker button[aria-pressed="true"] {
+  border-color: #9ba56a;
+  background: #f2f4e8;
+  box-shadow: 0 0 0 1px #9ba56a;
+}
+.border-sample {
+  width: 20px;
+  height: 26px;
+  border-radius: 4px;
+  background: url("./assets/alpine.jpg") center/cover;
+  flex-shrink: 0;
+}
+.border-sample--white {
+  border: 3px solid white;
+  box-shadow: 0 0 0 1px #dfe2d7;
+}
+@media (max-width: 600px) {
+  .frame-picker button {
+    font-size: 12px;
+  }
+}

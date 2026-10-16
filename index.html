@@ -13,8 +13,8 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23f5e95f'/%3E%3Ctext x='20' y='30' text-anchor='middle' font-size='32'%3E✳%3C/text%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="./scene.css" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./scene.css?v=controls-2" />
+    <link rel="stylesheet" href="./styles.css?v=controls-2" />
     <link rel="stylesheet" href="./assets/sted/cards.css" />
   </head>
   <body>
@@ -77,10 +77,31 @@
             ><span>YOUR NEXT LITTLE OBSESSION</span>
           </div>
           <div class="transport">
-            <div>
+            <div
+              class="transport-buttons"
+              role="group"
+              aria-label="Animation playback"
+            >
+              <button
+                id="previous"
+                class="icon-button step-button"
+                type="button"
+                aria-label="Step backward"
+                title="Step backward"
+              >
+                <span data-icon="previous"></span>
+              </button>
               <button id="play" class="button button-ink">
                 <span data-icon="pause"></span
                 ><span id="play-label">Pause</span></button
+              ><button
+                id="next"
+                class="icon-button step-button"
+                type="button"
+                aria-label="Step forward"
+                title="Step forward"
+              >
+                <span data-icon="next"></span></button
               ><button
                 id="restart"
                 class="icon-button"
@@ -122,6 +143,27 @@
                   <rect x="53" y="16" width="10" height="13" rx="2" /></svg
                 >Cascade
               </button>
+              <button data-mode="tunnel" aria-pressed="false">
+                <svg viewBox="0 0 80 34" aria-hidden="true">
+                  <path d="M5 3 33 13M75 3 47 13M5 31 33 21M75 31 47 21" />
+                  <rect x="33" y="10" width="14" height="14" rx="2" />
+                  <rect x="20" y="4" width="40" height="26" rx="3" /></svg
+                >Tunnel
+              </button>
+              <button data-mode="carousel" aria-pressed="false">
+                <svg viewBox="0 0 80 34" aria-hidden="true">
+                  <rect x="30" y="4" width="20" height="26" rx="3" />
+                  <path d="M22 10 11 13v12l11 3ZM58 10l11 3v12l-11 3Z" /></svg
+                >Carousel
+              </button>
+              <button data-mode="marquee" aria-pressed="false">
+                <svg viewBox="0 0 80 34" aria-hidden="true">
+                  <rect x="6" y="7" width="17" height="21" rx="2" />
+                  <rect x="31" y="7" width="17" height="21" rx="2" />
+                  <rect x="56" y="7" width="17" height="21" rx="2" />
+                  <path d="m9 3-4 3 4 3M5 6h68" /></svg
+                >Marquee
+              </button>
             </div>
             <div class="range-label">
               <label for="speed">Speed</label
@@ -146,6 +188,14 @@
               <h2>Give it character</h2>
               <span>02</span>
             </div>
+            <p class="control-label">Start with a look</p>
+            <div class="look-picker" role="group" aria-label="Visual preset">
+              <button data-look="original">Original</button
+              ><button data-look="immersive">Immersive</button
+              ><button data-look="gallery">Gallery</button
+              ><button data-look="minimal">Minimal</button>
+            </div>
+            <p class="control-label">Choose your images</p>
             <div class="collections" role="group" aria-label="Image collection">
               <button data-collection="travel">
                 <img src="./assets/alpine.jpg" alt="" />Travel</button
@@ -169,10 +219,53 @@
             ><button id="clear-images" class="text-button" hidden>
               Remove my images
             </button>
-            <div class="segmented" role="group" aria-label="Card format">
-              <button data-format="mixed">Mixed</button
-              ><button data-format="photos">Photos</button
-              ><button data-format="cards">Cards</button>
+            <p class="control-label">Card style</p>
+            <div class="format-picker" role="group" aria-label="Card format">
+              <button data-format="mixed">
+                <span
+                  class="format-sample sample-mixed"
+                  aria-hidden="true"
+                ></span
+                >Mixed
+              </button>
+              <button data-format="photos">
+                <span
+                  class="format-sample sample-photo"
+                  aria-hidden="true"
+                ></span
+                >Photo + text
+              </button>
+              <button data-format="cards">
+                <span
+                  class="format-sample sample-text"
+                  aria-hidden="true"
+                ></span
+                >Text cards
+              </button>
+              <button data-format="full">
+                <span
+                  class="format-sample sample-full"
+                  aria-hidden="true"
+                ></span
+                >Full image
+              </button>
+            </div>
+            <p class="control-label">Image border</p>
+            <div class="frame-picker" role="group" aria-label="Card border">
+              <button data-frame="none" type="button">
+                <span
+                  class="border-sample border-sample--none"
+                  aria-hidden="true"
+                ></span
+                >No frame
+              </button>
+              <button data-frame="white" type="button">
+                <span
+                  class="border-sample border-sample--white"
+                  aria-hidden="true"
+                ></span
+                >White frame
+              </button>
             </div>
             <div class="range-label">
               <label for="count">Card count</label
@@ -298,7 +391,7 @@
           <span class="step-number">01</span>
           <h3>Find your rhythm.</h3>
           <p>
-            Three motions. A few thoughtful controls.<br />Everything updates as
+            Six motions. A few thoughtful controls.<br />Everything updates as
             you play.
           </p>
         </div>
@@ -350,6 +443,6 @@
       </div>
       <div id="dialog-content"></div>
     </dialog>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js?v=controls-2"></script>
   </body>
 </html>
