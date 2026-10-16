@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✳ Motion Lab
+# Motion Lab
 
 **Beautiful image animations. Tweak them. Take the code.**
 
@@ -9,7 +9,7 @@ An open-source playground by [Dante Galeazzi](https://github.com/dantegaleazzi).
 [**Try the playground ↗**](https://dantegaleazzi.github.io/motion-lab/) · [**Get the landing starter**](templates/landing/) · [**Download v0.3.0**](https://github.com/dantegaleazzi/motion-lab/releases/tag/v0.3.0)
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-788650)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/dantegaleazzi/motion-lab?color=788650)](https://github.com/dantegaleazzi/motion-lab/releases)
+[![Release](https://img.shields.io/badge/release-v0.3.0-788650)](https://github.com/dantegaleazzi/motion-lab/releases)
 [![Checks](https://github.com/dantegaleazzi/motion-lab/actions/workflows/checks.yml/badge.svg)](https://github.com/dantegaleazzi/motion-lab/actions/workflows/checks.yml)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-JavaScript-e8dc71?labelColor=30372a)
 
